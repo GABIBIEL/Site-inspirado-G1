@@ -1,0 +1,692 @@
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Seu Portal de Notícias</title>
+    <meta
+      name="description"
+      content="Modelo de portal de notícias responsivo inspirado no layout de grandes portais brasileiros. Não oficial."
+    />
+    <style>
+      :root {
+        --bg: #ffffff;
+        --text: #111111;
+        --muted: #6b7280;
+        --brand: #c9161d; /* vermelho característico (ajuste se quiser algo diferente) */
+        --brand-2: #111111;
+        --card: #f7f7f7;
+        --border: #e5e7eb;
+        --link: #1f2937;
+        --maxw: 1200px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu,
+          Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        color: var(--text);
+        background: var(--bg);
+      }
+      a {
+        color: var(--link);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+        height: auto;
+        border-radius: 12px;
+      }
+
+      /* Barra superior / utilitário */
+      .topbar {
+        background: var(--brand);
+        color: #fff;
+      }
+      .topbar__wrap {
+        max-width: var(--maxw);
+        margin: auto;
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        padding: 0.5rem 1rem;
+      }
+      .topbar__badge {
+        background: rgba(255, 255, 255, 0.15);
+        padding: 0.25rem 0.5rem;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 0.825rem;
+      }
+      .topbar__ticker {
+        overflow: hidden;
+        white-space: nowrap;
+        flex: 1;
+        font-size: 0.9rem;
+      }
+      .topbar__ticker span {
+        display: inline-block;
+        padding-left: 100%;
+        animation: ticker 18s linear infinite;
+      }
+      @keyframes ticker {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-100%);
+        }
+      }
+
+      /* Header */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+      }
+      .header__wrap {
+        max-width: var(--maxw);
+        margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.85rem 1rem;
+        gap: 1rem;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-weight: 800;
+        letter-spacing: 0.2px;
+      }
+      .brand__logo {
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+        background: var(--brand);
+        display: inline-block;
+      }
+      .brand__name {
+        font-size: 1.35rem;
+      }
+
+      .nav {
+        display: flex;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+      }
+      .nav a {
+        padding: 0.45rem 0.65rem;
+        border-radius: 999px;
+        font-weight: 600;
+        color: #222;
+      }
+      .nav a:hover {
+        background: #f3f4f6;
+      }
+
+      .search {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .search input {
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 0.5rem 0.8rem;
+        min-width: 220px;
+      }
+
+      /* Layout */
+      .container {
+        max-width: var(--maxw);
+        margin: 1rem auto;
+        padding: 0 1rem;
+        display: grid;
+        grid-template-columns: 1.6fr 1fr;
+        gap: 20px;
+      }
+
+      /* Hero + Trilhas */
+      .hero {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 20px;
+      }
+      .hero__main {
+        background: var(--card);
+        padding: 16px;
+        border-radius: 16px;
+        border: 1px solid var(--border);
+      }
+      .hero__main h1 {
+        font-size: 1.8rem;
+        margin: 0.5rem 0 0;
+      }
+      .hero__meta {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-top: 0.25rem;
+      }
+
+      .hero__list {
+        display: grid;
+        gap: 14px;
+      }
+      .mini {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: 12px;
+        border-bottom: 1px dashed var(--border);
+        padding-bottom: 12px;
+      }
+      .mini:last-child {
+        border-bottom: none;
+      }
+      .mini h3 {
+        margin: 0.2rem 0;
+        font-size: 1.05rem;
+      }
+
+      /* Grade de matérias */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      .card__body {
+        padding: 12px;
+      }
+      .tag {
+        display: inline-block;
+        background: #fdecec;
+        color: var(--brand);
+        font-weight: 700;
+        padding: 0.2rem 0.5rem;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        margin-bottom: 0.25rem;
+      }
+      .card h4 {
+        margin: 0.3rem 0 0;
+        font-size: 1.05rem;
+      }
+      .card p {
+        color: var(--muted);
+        font-size: 0.95rem;
+        margin: 0.35rem 0 0;
+      }
+
+      /* Barra lateral */
+      aside {
+        display: grid;
+        gap: 16px;
+      }
+      .widget {
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 14px;
+        background: var(--bg);
+      }
+      .widget h3 {
+        margin: 0 0 0.4rem;
+      }
+      .toplist {
+        display: grid;
+        gap: 10px;
+        counter-reset: rank;
+      }
+      .toplist a {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 10px;
+        align-items: flex-start;
+        border-bottom: 1px dashed var(--border);
+        padding: 8px 0;
+      }
+      .toplist a:last-child {
+        border-bottom: none;
+      }
+      .toplist a::before {
+        counter-increment: rank;
+        content: counter(rank) ".";
+        font-weight: 800;
+        color: var(--brand);
+      }
+
+      /* Seções */
+      .section {
+        margin: 22px 0;
+      }
+      .section h2 {
+        font-size: 1.25rem;
+        margin: 0 0 0.6rem;
+      }
+
+      /* Rodapé */
+      footer {
+        margin-top: 32px;
+        border-top: 1px solid var(--border);
+        background: #fafafa;
+      }
+      .footer__wrap {
+        max-width: var(--maxw);
+        margin: auto;
+        padding: 18px 1rem;
+        display: grid;
+        gap: 10px;
+        color: #374151;
+      }
+      .footnav {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .footnav a {
+        color: #374151;
+      }
+
+      /* Responsivo */
+      @media (max-width: 1024px) {
+        .container {
+          grid-template-columns: 1fr;
+        }
+        .hero {
+          grid-template-columns: 1fr;
+        }
+        .grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 640px) {
+        .nav {
+          display: none;
+        }
+        .search input {
+          min-width: 140px;
+        }
+        .grid {
+          grid-template-columns: 1fr;
+        }
+        .mini {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Barra superior com manchete rolando -->
+    <div class="topbar" role="region" aria-label="Últimas notícias">
+      <div class="topbar__wrap">
+        <span class="topbar__badge">AO VIVO</span>
+        <div class="topbar__ticker" aria-live="polite">
+          <span
+            >⚡ Última hora: Governo anuncia novo pacote econômico; acompanhe em
+            tempo real • Clima: frente fria chega ao sul do país • Esportes:
+            equipe X vence clássico por 2–1</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Cabeçalho -->
+    <header>
+      <div class="header__wrap">
+        <a class="brand" href="#" aria-label="Página inicial">
+          <i class="brand__logo" aria-hidden="true"></i>
+          <span class="brand__name">SeuPortal</span>
+        </a>
+        <nav class="nav" aria-label="Seções principais">
+          <a href="#">Últimas</a>
+          <a href="#">Política</a>
+          <a href="#">Economia</a>
+          <a href="#">Brasil</a>
+          <a href="#">Mundo</a>
+          <a href="#">Tecnologia</a>
+          <a href="#">Esportes</a>
+          <a href="#">Entretenimento</a>
+          <a href="#">Podcasts</a>
+        </nav>
+        <form
+          class="search"
+          role="search"
+          aria-label="Buscar notícias"
+          onsubmit="event.preventDefault()"
+        >
+          <input type="search" placeholder="Buscar…" aria-label="Buscar" />
+        </form>
+      </div>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <main class="container">
+      <section class="hero" aria-label="Destaques">
+        <article class="hero__main">
+          <a href="#"
+            ><img
+              src="https://images.unsplash.com/photo-1549068106-b024baf5062d?q=80&w=1600&auto=format&fit=crop"
+              alt="Foto ilustrativa da matéria principal"
+          /></a>
+          <div class="hero__meta">
+            <span>Política</span> •
+            <time datetime="2025-08-12">12 ago 2025</time>
+          </div>
+          <h1>
+            <a href="#"
+              >Governo detalha plano de investimentos; veja os principais pontos
+              e o que muda</a
+            >
+          </h1>
+          <p style="color: var(--muted); margin: 0.4rem 0 0">
+            Medida prevê ações em infraestrutura, saúde e educação, com metas
+            para os próximos 12 meses.
+          </p>
+        </article>
+
+        <div class="hero__list">
+          <article class="mini">
+            <a href="#"
+              ><img
+                src="https://images.unsplash.com/photo-1482192505345-5655af888cc4?q=80&w=1200&auto=format&fit=crop"
+                alt="Miniatura 1"
+            /></a>
+            <div>
+              <div class="hero__meta">
+                <span>Economia</span> •
+                <time datetime="2025-08-12">12 ago</time>
+              </div>
+              <h3>
+                <a href="#"
+                  >Mercado reage a anúncio e bolsa fecha em alta pelo segundo
+                  dia</a
+                >
+              </h3>
+            </div>
+          </article>
+          <article class="mini">
+            <a href="#"
+              ><img
+                src="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1200&auto=format&fit=crop"
+                alt="Miniatura 2"
+            /></a>
+            <div>
+              <div class="hero__meta">
+                <span>Brasil</span> • <time datetime="2025-08-12">12 ago</time>
+              </div>
+              <h3>
+                <a href="#"
+                  >Frente fria derruba temperaturas no Sul e Sudeste; veja
+                  previsão</a
+                >
+              </h3>
+            </div>
+          </article>
+          <article class="mini">
+            <a href="#"
+              ><img
+                src="https://images.unsplash.com/photo-1502481851512-e9e2529bfbf9?q=80&w=1200&auto=format&fit=crop"
+                alt="Miniatura 3"
+            /></a>
+            <div>
+              <div class="hero__meta">
+                <span>Tecnologia</span> •
+                <time datetime="2025-08-11">11 ago</time>
+              </div>
+              <h3>
+                <a href="#"
+                  >Aplicativo popular lança recurso de privacidade; entenda como
+                  usar</a
+                >
+              </h3>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <aside aria-label="Mais lidas e widgets">
+        <div class="widget">
+          <h3>Mais lidas</h3>
+          <div class="toplist">
+            <a href="#">Governo apresenta metas e cronograma de obras</a>
+            <a href="#">Entenda o que muda nas regras do imposto</a>
+            <a href="#">Time X vence clássico com gol no fim</a>
+            <a href="#">Como proteger seus dados no celular</a>
+            <a href="#">Frente fria avança; cidades em alerta</a>
+          </div>
+        </div>
+        <div class="widget">
+          <h3>Assine a newsletter</h3>
+          <p style="color: var(--muted)">
+            Receba um resumo do dia no seu e‑mail.
+          </p>
+          <form
+            onsubmit="event.preventDefault(); alert('Inscrito com sucesso! (demo)')"
+          >
+            <input
+              type="email"
+              placeholder="seu@email.com"
+              aria-label="E-mail"
+              style="
+                width: 100%;
+                padding: 0.6rem 0.8rem;
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                margin-bottom: 8px;
+              "
+              required
+            />
+            <button
+              style="
+                width: 100%;
+                padding: 0.65rem 0.8rem;
+                border: 0;
+                border-radius: 10px;
+                background: var(--brand);
+                color: #fff;
+                font-weight: 700;
+                cursor: pointer;
+              "
+            >
+              Inscrever
+            </button>
+          </form>
+        </div>
+      </aside>
+    </main>
+  </body>
+</html>
+</head>
+<body>
+  <!-- Barra superior com manchete rolando -->
+  <div class="topbar" role="region" aria-label="Últimas notícias">
+    <div class="topbar__wrap">
+      <span class="topbar__badge">AO VIVO</span>
+      <div class="topbar__ticker" aria-live="polite">
+        <span>⚡ Última hora: Governo anuncia novo pacote econômico; acompanhe em tempo real • Clima: frente fria chega ao sul do país • Esportes: equipe X vence clássico por 2–1</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cabeçalho -->
+  <header>
+    <div class="header__wrap">
+      <a class="brand" href="#" aria-label="Página inicial">
+        <i class="brand__logo" aria-hidden="true"></i>
+        <span class="brand__name">SeuPortal</span>
+      </a>
+      <nav class="nav" aria-label="Seções principais">
+        <a href="#">Últimas</a>
+        <a href="#">Política</a>
+        <a href="#">Economia</a>
+        <a href="#">Brasil</a>
+        <a href="#">Mundo</a>
+        <a href="#">Tecnologia</a>
+        <a href="#">Esportes</a>
+        <a href="#">Entretenimento</a>
+        <a href="#">Podcasts</a>
+      </nav>
+      <form class="search" role="search" aria-label="Buscar notícias" onsubmit="event.preventDefault()">
+        <input type="search" placeholder="Buscar…" aria-label="Buscar" />
+      </form>
+    </div>
+  </header>
+
+  <!-- Conteúdo principal -->
+  <main class="container">
+    <section class="hero" aria-label="Destaques">
+      <article class="hero__main">
+        <a href="#"><img src="https://images.unsplash.com/photo-1549068106-b024baf5062d?q=80&w=1600&auto=format&fit=crop" alt="Foto ilustrativa da matéria principal"></a>
+        <div class="hero__meta"><span>Política</span> • <time datetime="2025-08-12">12 ago 2025</time></div>
+        <h1><a href="#">Governo detalha plano de investimentos; veja os principais pontos e o que muda</a></h1>
+        <p style="color:var(--muted);margin:.4rem 0 0">Medida prevê ações em infraestrutura, saúde e educação, com metas para os próximos 12 meses.</p>
+      </article>
+
+      <div class="hero__list">
+        <article class="mini">
+          <a href="#"><img src="https://images.unsplash.com/photo-1482192505345-5655af888cc4?q=80&w=1200&auto=format&fit=crop" alt="Miniatura 1"></a>
+          <div>
+            <div class="hero__meta"><span>Economia</span> • <time datetime="2025-08-12">12 ago</time></div>
+            <h3><a href="#">Mercado reage a anúncio e bolsa fecha em alta pelo segundo dia</a></h3>
+          </div>
+        </article>
+        <article class="mini">
+          <a href="#"><img src="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1200&auto=format&fit=crop" alt="Miniatura 2"></a>
+          <div>
+            <div class="hero__meta"><span>Brasil</span> • <time datetime="2025-08-12">12 ago</time></div>
+            <h3><a href="#">Frente fria derruba temperaturas no Sul e Sudeste; veja previsão</a></h3>
+          </div>
+        </article>
+        <article class="mini">
+          <a href="#"><img src="https://images.unsplash.com/photo-1502481851512-e9e2529bfbf9?q=80&w=1200&auto=format&fit=crop" alt="Miniatura 3"></a>
+          <div>
+            <div class="hero__meta"><span>Tecnologia</span> • <time datetime="2025-08-11">11 ago</time></div>
+            <h3><a href="#">Aplicativo popular lança recurso de privacidade; entenda como usar</a></h3>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <aside aria-label="Mais lidas e widgets">
+      <div class="widget">
+        <h3>Mais lidas</h3>
+        <div class="toplist">
+          <a href="#">Governo apresenta metas e cronograma de obras</a>
+          <a href="#">Entenda o que muda nas regras do imposto</a>
+          <a href="#">Time X vence clássico com gol no fim</a>
+          <a href="#">Como proteger seus dados no celular</a>
+          <a href="#">Frente fria avança; cidades em alerta</a>
+        </div>
+      </div>
+      <div class="widget">
+        <h3>Assine a newsletter</h3>
+        <p style="color:var(--muted)">Receba um resumo do dia no seu e‑mail.</p>
+        <form onsubmit="event.preventDefault(); alert('Inscrito com sucesso! (demo)')">
+          <input type="email" placeholder="seu@email.com" aria-label="E-mail" style="width:100%;padding:.6rem .8rem;border:1px solid var(--border);border-radius:10px;margin-bottom:8px" required>
+          <button style="width:100%;padding:.65rem .8rem;border:0;border-radius:10px;background:var(--brand);color:#fff;font-weight:700;cursor:pointer">Inscrever</button>
+        </form>
+      </div>
+    </aside>
+
+    <section class="section" aria-label="Últimas notícias" style="grid-column:1 / -1">
+      <h2>Últimas notícias</h2>
+      <div class="grid">
+        <!-- Card 1 -->
+        <article class="card">
+          <a href="#"><img src="https://images.unsplash.com/photo-1516542076529-1ea3854896e1?q=80&w=1600&auto=format&fit=crop" alt="thumb"></a>
+          <div class="card__body">
+            <span class="tag">Economia</span>
+            <h4><a href="#">Dólar recua e fecha a R$ 4,95 após novo comunicado</a></h4>
+            <p>Analistas avaliam próximos passos do Banco Central e impacto no crédito.</p>
+          </div>
+        </article>
+        <!-- Card 2 -->
+        <article class="card">
+          <a href="#"><img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1600&auto=format&fit=crop" alt="thumb"></a>
+          <div class="card__body">
+            <span class="tag">Saúde</span>
+            <h4><a href="#">Campanha de vacinação é ampliada; veja quem pode receber</a></h4>
+            <p>Governo orienta estados a reforçar postos com maior demanda.</p>
+          </div>
+        </article>
+        <!-- Card 3 -->
+        <article class="card">
+          <a href="#"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1600&auto=format&fit=crop" alt="thumb"></a>
+          <div class="card__body">
+            <span class="tag">Mundo</span>
+            <h4><a href="#">Cúpula internacional discute metas climáticas para 2035</a></h4>
+            <p>Líderes buscam consenso sobre redução de emissões e financiamento verde.</p>
+          </div>
+        </article>
+        <!-- Card 4 -->
+        <article class="card">
+          <a href="#"><img src="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1600&auto=format&fit=crop" alt="thumb"></a>
+          <div class="card__body">
+            <span class="tag">Tecnologia</span>
+            <h4><a href="#">Plataforma libera modo de segurança avançado</a></h4>
+            <p>Novo recurso promete bloquear golpes comuns em mensageiros.</p>
+          </div>
+        </article>
+        <!-- Card 5 -->
+        <article class="card">
+          <a href="#"><img src="https://images.unsplash.com/photo-1515168833906-d2a3b82b302a?q=80&w=1600&auto=format&fit=crop" alt="thumb"></a>
+          <div class="card__body">
+            <span class="tag">Entretenimento</span>
+            <h4><a href="#">Série sensação confirma nova temporada; estreia em 2026</a></h4>
+            <p>Elenco principal retorna; gravações começam no primeiro semestre.</p>
+          </div>
+        </article>
+        <!-- Card 6 -->
+        <article class="card">
+          <a href="#"><img src="https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1600&auto=format&fit=crop" alt="thumb"></a>
+          <div class="card__body">
+            <span class="tag">Esportes</span>
+            <h4><a href="#">Seleção anuncia convocação com novidades para amistosos</a></h4>
+            <p>Lista tem jovens apostas e retornos de veteranos.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer__wrap">
+      <nav class="footnav" aria-label="Mapa do site">
+        <a href="#">Política</a>
+        <a href="#">Economia</a>
+        <a href="#">Brasil</a>
+        <a href="#">Mundo</a>
+        <a href="#">Tecnologia</a>
+        <a href="#">Esportes</a>
+        <a href="#">Cultura</a>
+        <a href="#">Podcasts</a>
+      </nav>
+      <small>© 2025 SeuPortal – Modelo de demonstração. Este layout é inspirado no estilo de grandes portais, mas não é afiliado ao G1/Globo. Personalize cores, fontes e conteúdo.</small>
+    </div>
+  </footer>
+
+  <!-- Notas:
+    - Substitua as imagens por sua CDN/próprias.
+    - Ajuste as cores/variáveis para chegar mais perto da sua identidade visual.
+    - Para produção: divida CSS/JS, adicione fontes e componentes dinâmicos.
+  -->
+</body>
+<HTml>
